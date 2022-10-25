@@ -1,0 +1,19 @@
+Team capacity:
+	4 members
+	working hours: 8 hous per day
+	Sprint duration: 2 weeks (10 days)
+	total sprint working hours:80 hours
+
+sprint (1) Goals:
+	To make authentication and authorization (user ,third parties) front end ,and back end
+
+sprints (1) tasks:
+	create sign up page  ----------------------- 2 days
+	create sign in page  ----------------------- 1 days
+	create Reset password option --------------- 1 day
+	save data in database with testing it ------ 2 days
+	create APIs -------------------------------- 2 days 
+	test the final code with all modification -- 2 days
+
+	
+

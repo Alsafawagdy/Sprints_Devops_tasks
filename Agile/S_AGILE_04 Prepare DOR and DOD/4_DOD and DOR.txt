@@ -1,0 +1,20 @@
+Definition of Done:
+	- code has been written and reviewed
+	- Acceptance criteria met 
+	- Continuous Integration build passing
+	- Cross-browser testing done on current top 5 browsers according to analytics
+	- Mobile testing done on current top 3 mobile devices according to analytics
+	- passed all tests
+
+
+Definition of ready: A definition of ready (DoR) is used to determine whether work on a task is ready
+	  	to be started. Before teams assign a task or user story in a sprint, it must be 
+		sufficiently well described and understood by team members. 
+	- The Task is clear.
+-	- The team understand and know what to do 
+	- The team can do the task now
+	- User story has business value
+	- User story is achievable within a sprint
+	- User story is measurable and testable upon completion
+	- User story dependencies have been identified
+
