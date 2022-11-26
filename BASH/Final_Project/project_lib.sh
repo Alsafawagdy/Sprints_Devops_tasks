@@ -230,16 +230,25 @@ create_reports()
                 echo " only user and group can read and write"
 	fi
 }
+
 report_cron()
 {
-	echo "0 1 * * 1-4 tar -cf /root/backups/reports-$(date +%U)-$(date +%u).tar  ~/reports" >>reportbackupcron.txt
-	crontab reportbackupcron.txt
+	if  [[ $EUID == 0 ]];then
+		echo "0 1 * * 1-4 tar -cf /root/backups/reports-$(date +%U)-$(date +%u).tar  ~/reports" >> /var/spool/cron/root
+	else
+		(crontab -1 2>/dev/null;echo "0 1 * * 1-4 tar -cf /root/backups/reports-$(date +%U)-$(date +%u).tar  ~/reports")| crontab -
+	fi
 	echo "backup schedule is updates successfully"
 }
-sync(){
+sync()
+{
 	mkdir -p  ~/manager/audit/reports
-	echo "0 2 * * 1-4 sync ~/reports/* ~/manager/audit/reports" >> synccron.txt
-	crontab synccron.txt
+	if  [[ $EUID == 0 ]];then
+		echo "0 2 * * 1-4 sync ~/reports/* ~/manager/audit/reports" >> /var/spool/cron/root
+
+	else
+		(crontab -1 2>/dev/null;echo "0 2 * * 1-4 sync ~/reports/* ~/manager/audit/reports")|crontab -
+	fi
 	echo "sync is done successfully"
 }
 #Func_Menu $1 $2 $3

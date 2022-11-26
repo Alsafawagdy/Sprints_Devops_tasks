@@ -2,6 +2,8 @@
 
 currenttime=$(date +%H:%M)
 
+echo "checking directories and files "
+
 if [[ ! -d ~/Reports ]];
 then
 	mkdir -p ~/Reports/2022/
@@ -17,6 +19,7 @@ then
         done
         mkdir ~/Reports/2022/2
 	touch ~/Reports/2022/2/{1..28}.xls
+	echo "Creating directories and files"
 
 
 elif [[ ! -d ~/Reports/2022  ]];
@@ -34,12 +37,15 @@ then
         done
         mkdir ~/Reports/2022/2
         touch ~/Reports/2022/2/{1..28}.xls
+	echo "creating files"
 
 elif [[ ! -f ~/Reports/2022/$(date +%m)/$(date +%d).xls ]];
 then
 	touch ~/Reports/2022/$(date +%m)/$(date +%d).xls
+	echo "Creating today's Report"
 fi
 
+echo "Every thing is ok"
 
 if [[ ! -d ~/backups ]];
 then 

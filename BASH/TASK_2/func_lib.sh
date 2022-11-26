@@ -99,12 +99,4 @@ backupcron()
 		(crontab -1 2> /dev/null;echo "0 12 * * * tar -cf 2homebackup.tar $HOME ") | crontab -
 	fi 
 	echo "the backup is added to cron"
-
 }
-
-#have_Root_Privilage
-#Changing_Port  
-#Dis_Root_Login
-#Add_User
-backupcron
-
