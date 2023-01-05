@@ -2,7 +2,7 @@
 # Please try the three ways
 
 '''
-2st way
+1st way
 1) changed the string to list
 2) change the char by using index
 3) join the list with no spaces with it
