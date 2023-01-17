@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a5fc820-6c37-4e78-861a-d99bbf7a9d77" name="Default Changelist" comment="" />
+    <list default="true" id="5a5fc820-6c37-4e78-861a-d99bbf7a9d77" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/pythonProject/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/.idea/vcs.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +38,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pythonProject/main.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pythonProject" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
@@ -104,6 +106,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="137" y="14" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1673782714495">
@@ -114,10 +117,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1673788774977" />
-    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1673782707768">
+    <state x="463" y="119" key="FileChooserDialogImpl" timestamp="1673936896070">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1673782707768" />
+    <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1673936896069" />
     <state width="1345" height="179" key="GridCell.Tab.0.bottom" timestamp="1673789652133">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
