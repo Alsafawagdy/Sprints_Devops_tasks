@@ -51,10 +51,11 @@ def EnterRecord():
         print("Make sure you enter your Email in right format ")
         email_address = input("Please enter your Email again: \n")
     # Phone number
-    phone = str(input("Please enter the phone number: \n"))
+    phone = list(input("Please enter the phone number: \n"))
     while not re.match(r"(\+02)* *01+[1,0,2,5][0-9]{8}$", phone):
         print("Make sure you enter your phone number in right format  ")
-        phone = str(input("Please enter your phone number again: \n"))
+        phone = list(input("Please enter your phone number again: \n"))
+
     #  today date
     today = (date.today()).strftime("%d/%m/%Y")
     data = [name, address, email_address, phone, today]
