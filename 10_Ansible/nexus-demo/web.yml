@@ -1,0 +1,9 @@
+
+- hosts: web
+  remote_user: ec2-user
+  become: yes
+
+  roles:
+    - web
+
+

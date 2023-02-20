@@ -1,0 +1,81 @@
+---
+
+- name: install updates
+  yum: update_cache=yes
+
+- name : update yum packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: install wget
+  yum:
+    name: 'wget'
+    state: installed
+
+- name: install java
+  yum:
+    name: 'java-1.8.0-openjdk.x86_64'
+    state: present
+
+- name: make directory 
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    
+
+- name: Download nexus
+  get_url:
+    url: https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+    dest: /{{ install_dir }}/nexus.tar.gz
+  
+- name: Unzip the downloaded file
+  unarchive:
+    src: /{{ install_dir }}/nexus.tar.gz
+    dest: /{{ install_dir }}
+    remote_src: yes
+
+- name: rename the file
+  command: mv {{ install_dir }}/nexus-3.47.1-01  {{ install_dir }}/nexus 
+
+- name: Add nexus user
+  user:
+    name: nexus
+    state: present
+
+- name: Change the ownership of nexus files
+  file:
+    path: '/{{ install_dir }}/nexus'
+    owner: nexus
+    group: nexus
+    recurse: true
+
+- name: Change the ownership of nexus data directory
+  file:
+    path: '/{{ install_dir }}/sonatype-work'
+    owner: nexus
+    group: nexus
+    recurse: true
+
+- name: Uncomment line from /app/nexus/bin/nexus.rc
+  replace:
+    path: '{{ install_dir }}/nexus/bin/nexus.rc'
+    regexp: '#run_as_user=""'
+    replace: run_as_user="nexus"
+
+- name: Running Nexus as a System Service
+  template:
+    src: nexus.service
+    dest: /etc/systemd/system/nexus.service
+
+- name: allow SELinux to acess  /app/nexus/bin/nexus
+  command : chcon -R -t bin_t /app/nexus/bin/nexus
+
+- name: Reload Systemd service configuration
+  shell: 'systemctl daemon-reload'
+
+- name: add nexus service to boot
+  systemd: 
+    name: nexus 
+    enabled: true
+    state: started
