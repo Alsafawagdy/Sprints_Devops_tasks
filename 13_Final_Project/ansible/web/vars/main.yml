@@ -3,6 +3,5 @@ java: "openjdk-11-jdk"
 jenkins:
   repo_URL: "https://pkg.jenkins.io/debian-stable/jenkins.io.key"
 
-aws_access_key: AKIAWERX6SIVTK4ECGOD
-aws_secret_key: 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
+
 aws_default_region: us-east-1 
