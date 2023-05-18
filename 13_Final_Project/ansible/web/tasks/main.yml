@@ -1,0 +1,183 @@
+---
+#****************install Docker ********************
+
+- name: Install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+
+# - name: Install Docker Module for Python
+#   pip:
+#     name: docker
+
+- name: Add  Ubuntu user to docker group
+  user:
+    name: "ubuntu"
+    groups: ["docker"]
+    append: yes
+  tags:
+    - docker
+
+- name: check permission of  /var/run/docker.sock
+  file: 
+    path: /var/run/docker.sock
+    mode: '0777'
+
+#*****************install jenkins ***************************
+- name: Download jenkins repo
+  apt_key:
+    url: "{{jenkins.repo_URL}}"
+    state: present
+  become: yes
+    
+- name: ensure the repo  is configured
+  apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+  become: yes
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    state: latest
+
+- name: Install java
+  apt :
+    name: "{{java}}"
+    state: present
+
+- name: Install jenkins
+  apt: 
+    name: jenkins
+    state: latest
+
+- name: Start jenkins
+  service:
+    name: jenkins
+    enabled: true
+    state:  started
+
+- name: Adding jenkins user  to group docker
+  user:
+    name: jenkins
+    groups: ["docker"]
+    append: yes
+
+# print the password
+- name: Display /var/lib/jenkins/secrets/initialAdminPassword contents
+  command: cat /var/lib/jenkins/secrets/initialAdminPassword 
+  register: command_output
+
+- name: Print to password
+  debug:
+    msg: "the initial password = {{command_output.stdout}}"
+
+#*****************install aws cli + kubeconfig*****************
+- name: apt-get update
+  apt: update_cache=yes
+    
+- name: Install Python PIP
+  apt: pkg=python3-pip state=latest
+
+- name: Install boto via PIP
+  pip: name=boto state=latest
+
+- name: Install AWS CLI
+  pip: name=awscli state=latest
+
+- name: AWS | Assures dir exists
+  file: path="/home/ubuntu/.aws" state=directory
+
+- name: AWS | create credentials
+  template:
+    src: aws_credentials.tpl
+    dest: "/home/ubuntu/.aws/credentials"
+- name: AWS | create config
+  template:
+    src: config.tpl
+    dest: "/home/ubuntu/.aws/config"
+    
+- name: add kubeconfig
+  command: aws eks --region us-east-1 update-kubeconfig --name eks_cluster
+
+# ************** install kubectl *******************
+- name: Make the Swap inactive
+  command: swapoff -a
+
+
+- name: install APT Transport HTTPS
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: add Kubernetes apt-key for APT repository
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: add Kubernetes APT repository
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: 'kubernetes'
+
+- name: install kubelet
+  apt:
+    name: kubelet
+    state: present
+    update_cache: true
+
+- name: install kubeadm
+  apt:
+    name: kubeadm
+    state: present
+- name: Creating a daemon json
+  copy:
+    dest: "/etc/docker/daemon1.json"
+    content: |
+      {
+      "exec-opts": ["native.cgroupdriver=systemd"]
+      }
+- name: restarting the docker
+  ansible.builtin.shell: |
+    systemctl daemon-reload
+    systemctl restart docker
+    systemctl restart kubelet
+
+- name: install kubectl
+  apt:
+    name: kubectl
+    state: present
+    force: yes
+
+- name: Print to password
+  debug:
+    msg: "the initial password = {{command_output.stdout}}"
