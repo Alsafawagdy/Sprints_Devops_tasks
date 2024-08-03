@@ -1,7 +1,0 @@
----
-java: "openjdk-11-jdk"
-jenkins:
-  repo_URL: "https://pkg.jenkins.io/debian-stable/jenkins.io.key"
-
-
-aws_default_region: us-east-1 
